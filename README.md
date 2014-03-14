@@ -12,7 +12,7 @@ We developed two text based methods to identify statin induced myotoxicity from 
 
 These methods rely on filtering records by inclusion and exclusion keyword filters.  These can be customized to your institution's documentation practices as needed.  We provide two sets of lists for each algorithm:
 
-1. Original list - These keywords were identified using a training set of 300 records from Vanderbilt's deidentified electronic medical record database.  These records were not reviewed manually to make an absolute determination of case/control status.
-2. Corrected list - These keywords contain both those in the original list, and those that were found in another 300 records from the same database.  This set of records had their entire record reviewed and contained a total of 124 confirmed stain myotoxicity cases and 176 controls.
+1. **Original list** - These keywords were identified using a training set of 300 records from Vanderbilt's deidentified electronic medical record database.  These records were not reviewed manually to make an absolute determination of case/control status.
+2. **Corrected list** - These keywords contain both those in the original list, and those that were found in another 300 records from the same database.  This set of records had their entire record reviewed and contained a total of 124 confirmed stain myotoxicity cases and 176 controls.
 
 
