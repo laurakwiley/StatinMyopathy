@@ -20,5 +20,3 @@ All methods were performed using R v3.0.2 and require the following libraries:
    *   [plyr](http://cran.r-project.org/web/packages/plyr/index.html)
    *   [snowfall](http://cran.r-project.org/web/packages/snowfall/index.html) - for parallel processing large volumes of notes.
 
-Extract Statin Allergies from Problem Lists
---------------------------------------------
