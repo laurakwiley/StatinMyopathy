@@ -1,3 +1,5 @@
+*Due to illness, removal of Vanderbilt specific information (e.g. database calls) has been delayed.  All code should be posted by Wednesday, March 19th, 2014.*
+
 Statin Myopathy
 ==============
 
@@ -19,7 +21,3 @@ All methods were performed using R v3.0.2 and require the following libraries:
    *   [stringr](http://cran.r-project.org/web/packages/stringr/index.html)
    *   [plyr](http://cran.r-project.org/web/packages/plyr/index.html)
    *   [snowfall](http://cran.r-project.org/web/packages/snowfall/index.html) - for parallel processing large volumes of notes.
-
-Timeline
-==========
-Due to illness, removal of Vanderbilt specific information (e.g. database calls) has been delayed.  All code should be posted by Wednesday, March 19th, 2014.
