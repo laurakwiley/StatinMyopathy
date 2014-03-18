@@ -16,6 +16,14 @@
 ##		
 ##  Input: x is a data frame that has a column called "allergy" that ideally has one drug per line.
 ##	Returns: dataframe that has filtered out any entries where the "allergy" column does not match the criteria described above.
+##
+##
+## extract_specific_statins() - takes output from either previous function and extracts which statins are mentioned in the allergy.  If a specific statin (e.g. lipitor or atorvastatin) are not mentioned, then a general "statins" (to indicate class allergy) is returned.
+## This function:
+##    1. Extracts all trade and generic names of statins.
+##    2. Individuals lacking a specific trade or generic statin name are assigned "statins" as an indicator of a class effect
+## Input: x is a dataframe that has at least two columns: IND_SEQ (the individual identifier) and allergy (the filtered allergy text from either of the previous two functions, additional columns are ignored.
+## Output: a two column dataframe: IND_SEQ (the individual identifier) and statin (the specific statin or "statins" that the patient had listed in the allergy text).  If patients have recorded allergies to more than one statin they will have multiple entries (e.g. multiple rows), one for each statin)
 ############################################################
 
 
@@ -44,3 +52,43 @@ extract_statin_myopathy_pl_allergy_corected_list<-function(x){
   statin_myopathy<-filter_by_statin[!filter_by_statin$allergy%in%filter_notmyopathy_by_myopathy$allergy,]
   return(statin_myopathy)
 }
+
+extract_specific_statins<-function(x){
+  ## Identify statin specific keywords
+  atorvastatin_keywords<-c("atorvastatin","lipitor","caduet")
+  fluvastatin_keywords<-c("fluvastatin","lescol")
+  lovastatin_keywords<-c("lovastatin","mevacor","altocor","altoprev")
+  pitavastatin_keywords<-c("pitavastatin","livalo","pitava")
+  pravastatin_keywords<-c("pravastatin","pravachol")
+  rosuvastatin_keywords<-c("rosuvastatin","crestor")
+  simvastatin_keywords<-c("simvastatin","zocor","vytorin","simcor")
+  
+  ## Extract Unique IDs for allegeries with each specific statin
+  ## Make new column with the pretty formatted statin label
+  atorvastatin_cases<-data.frame(IND_SEQ=unique(x[grep(paste(atorvastatin_keywords,collapse="|"),x$allergy),]$IND_SEQ))
+  atorvastatin_cases$statin<-rep("atorvastatin",nrow(atorvastatin_cases))
+  fluvastatin_cases<-data.frame(IND_SEQ=unique(x[grep(paste(fluvastatin_keywords,collapse="|"),x$allergy),]$IND_SEQ))
+  fluvastatin_cases$statin<-rep("fluvastatin",nrow(fluvastatin_cases))
+  lovastatin_cases<-data.frame(IND_SEQ=unique(x[grep(paste(lovastatin_keywords,collapse="|"),x$allergy),]$IND_SEQ))
+  lovastatin_cases$statin<-rep("lovastatin",nrow(lovastatin_cases))
+  pitavastatin_cases<-data.frame(IND_SEQ=unique(x[grep(paste(pitavastatin_keywords,collapse="|"),x$allergy),]$IND_SEQ))
+  pitavastatin_cases$statin<-rep("pitavastatin",nrow(pitavastatin_cases))
+  pravastatin_cases<-data.frame(IND_SEQ=unique(x[grep(paste(pravastatin_keywords,collapse="|"),x$allergy),]$IND_SEQ))
+  pravastatin_cases$statin<-rep("pravastatin",nrow(pravastatin_cases))
+  rosuvastatin_cases<-data.frame(IND_SEQ=unique(x[grep(paste(rosuvastatin_keywords,collapse="|"),x$allergy),]$IND_SEQ))
+  rosuva statin_cases$statin<-rep("rosuvastatin",nrow(rosuvastatin_cases))
+  simvastatin_cases<-data.frame(IND_SEQ=unique(x[grep(paste(simvastatin_keywords,collapse="|"),x$allergy),]$IND_SEQ))
+  simvastatin_cases$statin<-rep("simvastatin",nrow(simvastatin_cases))
+  
+  ## Create full list of all indidivudals who have a specified statin reaction
+  individuals_with_statin_specific_allergy<-rbind.fill(atorvastatin_cases,fluvastatin_cases,lovastatin_cases,pitavastatin_cases,pravastatin_cases,rosuvastatin_cases,simvastatin_cases)
+  
+  ## Identify any indviduals who do not have a specific statin listed
+  ## Put the generic "statins" as their specific statin allergy
+  individuals_with_general_statin_allergy<-data.frame(IND_SEQ=unique(x[!x$IND_SEQ%in%individuals_with_statin_specific_allergy$IND_SEQ,]$IND_SEQ))
+  individuals_with_general_statin_allergy$statin<-rep("statins",nrow(individuals_with_general_statin_allergy))
+  
+  ## Return the complet list of statin specific and generic statin individuals
+  return(rbind(individuals_with_statin_specific_allergy,individuals_with_general_statin_allergy))                                                    
+}
+
