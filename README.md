@@ -1,5 +1,3 @@
-*Due to illness, removal of Vanderbilt specific information (e.g. database calls) has been delayed.  All code should be posted by Wednesday, March 19th, 2014.*
-
 Statin Myopathy
 ==============
 
